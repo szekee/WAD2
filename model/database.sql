@@ -28,7 +28,6 @@ CREATE TABLE IF NOT EXISTS profile (
 	userid int NOT NULL,
     skills varchar(128) not null,
     bio varchar(600),
-    profilepic varchar(600),
     portfoliolink varchar(600),
     portfoliopath varchar(600),
     primary key(profileid),
@@ -37,7 +36,7 @@ CREATE TABLE IF NOT EXISTS profile (
 
 CREATE TABLE IF NOT EXISTS education (
 	eduid int NOT NULL auto_increment,
-	profileid varchar(28) not null,
+	profileid int not null,
     school varchar(128) not null,
     coursename varchar(128) not null,
     startdate date,
@@ -48,7 +47,7 @@ CREATE TABLE IF NOT EXISTS education (
 
 CREATE TABLE IF NOT EXISTS professionalcerts (
 	certsid int NOT NULL auto_increment,
-	profileid varchar(28) not null,
+	profileid int not null,
     certname varchar(128) not null,
     completiondate date not null,
     primary key(certsid),
@@ -58,7 +57,7 @@ CREATE TABLE IF NOT EXISTS professionalcerts (
 CREATE TABLE IF NOT EXISTS projects (
 	projectid int NOT NULL auto_increment,
     projectname varchar(56) not null,
-	profileid varchar(28) not null,
+	profileid int not null,
     description varchar(600),
     photopath varchar(600),
     projectlink varchar(600),
@@ -77,7 +76,7 @@ CREATE TABLE IF NOT EXISTS job (
     enddate date,
     address varchar(600),
 	createuserid int not null,
-    createdate date not null,
+    createdate DATETIME on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     listingstatus varchar(28) not null,
     primary key(jobid),
 	foreign key(createuserid) references user(userid)
@@ -85,37 +84,37 @@ CREATE TABLE IF NOT EXISTS job (
 
 CREATE TABLE IF NOT EXISTS applylisting (
 	applyid int NOT NULL auto_increment,
-	jobid varchar(28) not null,
+	jobid int not null,
     userid int not null,
-    applydate date not null,
+    applydate DATETIME on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     applicationstatus varchar(28) not null,
     primary key(applyid),
 	foreign key (userid) references user(userid),
-	foreign key (jobid) references user(jobid)
+	foreign key (jobid) references job(jobid)
 );
 
 CREATE TABLE IF NOT EXISTS likelisting (
-	jobid varchar(28) not null,
+	jobid int not null,
     userid int not null,
-	is_liked bool,
+	is_liked boolean,
     primary key(jobid, userid),
 	foreign key (userid) references user(userid),
-	foreign key (jobid) references user(jobid)
+	foreign key (jobid) references job(jobid)
 );
 
-INSERT INTO user (name, password, email, address, country, gender, phone, personType) 
-VALUES ('Mary', 'password', 'mary@gmail.com', 'Blk 1 ABC Road Singapore 111111', 'Singapore', 'F', '99999999', 'P');
-INSERT INTO user (name, password, email, address, country, gender, phone, personType) 
-VALUES ('The Company', 'password1', 'company@gmail.com', 'Blk 2 DEF Road Singapore 111111', 'Singapore', null, '88888888', 'C');
+INSERT INTO user (password, email, address, country, gender, phone, personType) 
+VALUES ('password', 'mary@gmail.com', 'Blk 1 ABC Road Singapore 111111', 'Singapore', 'F', '99999999', 'P');
+INSERT INTO user (password, email, address, country, gender, phone, personType) 
+VALUES ('password1', 'company@gmail.com', 'Blk 2 DEF Road Singapore 111111', 'Singapore', null, '88888888', 'C');
 
-INSERT INTO role (rolename, userid) VALUES ('Photographer', 1);
-INSERT INTO role (rolename, userid) VALUES ('Videographer', 1);
-INSERT INTO role (rolename, userid) VALUES ('Photo editor', 2);
+INSERT INTO role (rolename, userid) VALUES ('photographer', 1);
+INSERT INTO role (rolename, userid) VALUES ('videographer', 1);
+INSERT INTO role (rolename, userid) VALUES ('photo editor', 2);
 
-INSERT INTO profile (userid, skills, bio, profilepic, portfoliolink, portfoliopath)
-VALUES (1, 'photography, videography, photo editing', 'Best CameraWoman in SG', '/profile/profilepic.png', 'www.marythebest.com', '/profile/maryportfolio.pdf');
-INSERT INTO profile (userid, skills, bio, profilepic, portfoliolink)
-VALUES (2, 'photo editing', 'Best company in the world', '/profile/companypic.png', 'www.company.com');
+INSERT INTO profile (userid, skills, bio, portfoliolink, portfoliopath)
+VALUES (1, 'photography, videography, photo editing', 'Best CameraWoman in SG', 'www.marythebest.com', '/profile/maryportfolio.pdf');
+INSERT INTO profile (userid, skills, bio, portfoliolink)
+VALUES (2, 'photo editing', 'Best company in the world', 'www.company.com');
 
 INSERT INTO education (profileid, school, coursename, startdate, enddate) 
 VALUES (1, 'SMU', 'Photography 101', '2020-11-11', '2021-11-11');
@@ -131,13 +130,38 @@ INSERT INTO projects (profileid, projectname, description, photopath, projectlin
 VALUES (2, 'Photoshoot', "20 Models to take photo", "profile/projects/2", "www.company.com/photoshoot");
 
 INSERT INTO job (jobname, jobdesc, rolerequired, picturepath, skills, startdate, enddate, address, createuserid, createdate, listingstatus)
-VALUES ('AmazingPhotographer', 'take photo of homo sapiens for 2 day event', 'photographer', null, 'knowledge of using camera', '2021-02-22', '2021-02-23', '12 imlost road #01-00 Singapore 000000', 2, '2020-03-01', 'open');
+VALUES ('AmazingPhotographer', 'take photo of homo sapiens for 2 day event', 'photographer', 'sun-photo.jpeg', 'knowledge of using camera', '2021-02-22', '2021-02-23', '12 imlost road #01-00 Singapore 000000', 2, '2020-03-01 17:00:00', 'open');
 INSERT INTO job (jobname, jobdesc, rolerequired, picturepath, skills, startdate, enddate, address, createuserid, createdate, listingstatus)
-VALUES ('WonderfulVideographer', 'film homo sapiens for 2 day event', 'videographer', null, 'knowledge of using camera', '2021-02-22', '2021-02-23', '12 imlost road #01-00 Singapore 000000', 2, '2020-04-21', 'closed');
+VALUES ('WonderfulVideographer', 'film homo sapiens for 2 day event', 'videographer', 'shutterstock_1316889752.jpeg', 'knowledge of using camera', '2021-02-22', '2021-02-23', '12 imlost road #01-00 Singapore 000000', 2, '2020-04-21 17:00:00', 'closed');
+INSERT INTO job (jobname, jobdesc, rolerequired, picturepath, skills, startdate, enddate, address, createuserid, createdate, listingstatus)
+VALUES ('FantasticModel', 'pose like homo sapiens for 2 day event', 'model', 'photo_2021-09-13_13-57-23.jpg', 'posing glamourously', '2021-02-22', '2021-02-23', '12 imlost road #01-00 Singapore 000000', 2, '2020-03-01 17:00:00', 'open');
+INSERT INTO job (jobname, jobdesc, rolerequired, picturepath, skills, startdate, enddate, address, createuserid, createdate, listingstatus)
+VALUES ('TalentedActress', 'act as mother for 2 day event', 'actress', 'matheus-ferrero-W7b3eDUb_2I-unsplash.jpg', 'acting realistically', '2021-02-22', '2021-02-23', '12 imlost road #01-00 Singapore 000000', 2, '2020-04-21 17:00:00', 'closed');
+INSERT INTO job (jobname, jobdesc, rolerequired, picturepath, skills, startdate, enddate, address, createuserid, createdate, listingstatus)
+VALUES ('ExperiencedProducer', 'produce cool videos of homo sapiens for 2 day event', 'photographer', 'Film-Production-Company.jpeg', 'knowledge of using camera', '2021-02-22', '2021-02-23', '12 imlost road #01-00 Singapore 000000', 2, '2020-03-01 17:00:00', 'open');
+INSERT INTO job (jobname, jobdesc, rolerequired, picturepath, skills, startdate, enddate, address, createuserid, createdate, listingstatus)
+VALUES ('JazzySoundProducer', 'produce jazzy sounds for 2 day event', 'videographer', 'Engineer_at_audio_console_at_Danish_Broadcasting_Corporation.png', 'knowledge of using camera', '2021-02-22', '2021-02-23', '12 imlost road #01-00 Singapore 000000', 2, '2020-04-21 17:00:00', 'closed');
+INSERT INTO job (jobname, jobdesc, rolerequired, picturepath, skills, startdate, enddate, address, createuserid, createdate, listingstatus)
+VALUES ('ChildActor', 'pose like homo sapiens for 2 day event', 'model', '13SCENE-articleLarge.jpeg', 'posing glamourously', '2021-02-22', '2021-02-23', '12 imlost road #01-00 Singapore 000000', 2, '2020-03-01 17:00:00', 'open');
+INSERT INTO job (jobname, jobdesc, rolerequired, picturepath, skills, startdate, enddate, address, createuserid, createdate, listingstatus)
+VALUES ('MakeUpArtist', 'make homo sapiens pretty for 2 day event', 'actress', 'makeupartist.jpeg', 'acting realistically', '2021-02-22', '2021-02-23', '12 imlost road #01-00 Singapore 000000', 2, '2020-04-21 17:00:00', 'closed');
+
 
 INSERT INTO applylisting (jobid, userid, applydate, applicationstatus)
 VALUES (1, 1, '2021-01-16', 'submitted');
 INSERT INTO applylisting (jobid, userid, applydate, applicationstatus)
-VALUES (2, 1, '2020-01-16', 'accepted');
+VALUES (1, 2, '2020-01-16', 'accepted');
+INSERT INTO applylisting (jobid, userid, applydate, applicationstatus)
+VALUES (2, 2, '2020-01-16', 'submitted');
+INSERT INTO applylisting (jobid, userid, applydate, applicationstatus)
+VALUES (3, 2, '2020-01-16', 'accepted');
+INSERT INTO applylisting (jobid, userid, applydate, applicationstatus)
+VALUES (4, 2, '2020-01-16', 'submitted');
 
 INSERT INTO likelisting (jobid, userid, is_liked) VALUES (1, 1, 1);
+INSERT INTO likelisting (jobid, userid, is_liked) VALUES (2, 1, 1);
+INSERT INTO likelisting (jobid, userid, is_liked) VALUES (1, 2, 1);
+INSERT INTO likelisting (jobid, userid, is_liked) VALUES (4, 2, 1);
+INSERT INTO likelisting (jobid, userid, is_liked) VALUES (5, 2, 1);
+INSERT INTO likelisting (jobid, userid, is_liked) VALUES (6, 2, 1);
+INSERT INTO likelisting (jobid, userid, is_liked) VALUES (7, 2, 1);

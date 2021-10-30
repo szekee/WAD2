@@ -1,8 +1,42 @@
 <?php
 
 require_once '../model/common.php';
+
 $dao = new ProfileDAO();
-$profiles = $dao->getAll(); // Get an Indexed Array of Post objects
+$allprofiles = $dao->getAll(); // Get an Indexed Array of Post objects
+
+$locations = [];
+$roles = [];
+$profiles = [];
+
+
+if ( isset($_GET['locations']) && isset($_GET['roles'])) {
+    $locations = explode("; ", $_GET['locations']);
+    $roles = explode("; ", $_GET['roles']);
+
+} else {
+    try {
+        $json = file_get_contents('php://input');
+
+        $data = json_decode($json);
+
+        $locations = explode("; " , $data->locations);
+        $roles = explode("; " , $data->roles);
+
+    } catch (Exception $e) {
+        $status = json_encode("failed");
+        echo $status;
+    }
+}
+
+foreach ($allprofiles as $profile) {
+    if (in_array($profile->getCountry(), $locations)) {
+        $profiles[] = $profile;
+        continue;
+    } elseif (count(array_intersect($roles, $profile->getRoles())) > 0) {
+        $profiles[] = $profile;
+    }
+}
 
 $items = [];
 foreach( $profiles as $profile_object) {
