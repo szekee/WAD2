@@ -11,8 +11,8 @@ CREATE TABLE IF NOT EXISTS user (
     address varchar(128),
 	country varchar(28),
     gender varchar(28),
-    phone varchar(28) not null,
-    personType varchar(28) not null,
+    phone varchar(28),
+    dob datetime,
     PRIMARY KEY(userid)
 );
 
@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS profile (
 	userid int NOT NULL,
     skills varchar(128) not null,
     bio varchar(600),
+    profilepic varchar(600),
     portfoliolink varchar(600),
     portfoliopath varchar(600),
     primary key(profileid),
@@ -102,19 +103,19 @@ CREATE TABLE IF NOT EXISTS likelisting (
 	foreign key (jobid) references job(jobid)
 );
 
-INSERT INTO user (password, email, address, country, gender, phone, personType) 
-VALUES ('password', 'mary@gmail.com', 'Blk 1 ABC Road Singapore 111111', 'Singapore', 'F', '99999999', 'P');
-INSERT INTO user (password, email, address, country, gender, phone, personType) 
-VALUES ('password1', 'company@gmail.com', 'Blk 2 DEF Road Singapore 111111', 'Singapore', null, '88888888', 'C');
+INSERT INTO user (name, password, email, address, country, gender, phone, dob) 
+VALUES ('mary', 'password', 'mary@gmail.com', 'Blk 1 ABC Road Singapore 111111', 'Singapore', 'F', '99999999', '2021-02-23');
+INSERT INTO user (name, password, email, address, country, gender, phone, dob) 
+VALUES ('The company', 'password1', 'company@gmail.com', 'Blk 2 DEF Road Singapore 111111', 'Singapore', null, '88888888', '2021-02-23');
 
 INSERT INTO role (rolename, userid) VALUES ('photographer', 1);
 INSERT INTO role (rolename, userid) VALUES ('videographer', 1);
 INSERT INTO role (rolename, userid) VALUES ('photo editor', 2);
 
-INSERT INTO profile (userid, skills, bio, portfoliolink, portfoliopath)
-VALUES (1, 'photography, videography, photo editing', 'Best CameraWoman in SG', 'www.marythebest.com', '/profile/maryportfolio.pdf');
-INSERT INTO profile (userid, skills, bio, portfoliolink)
-VALUES (2, 'photo editing', 'Best company in the world', 'www.company.com');
+INSERT INTO profile (userid, skills, bio, profilepic, portfoliolink, portfoliopath)
+VALUES (1, 'photography, videography, photo editing', 'Best CameraWoman in SG',  'profilepic.png', 'www.marythebest.com', '/profile/maryportfolio.pdf');
+INSERT INTO profile (userid, skills, bio, profilepic, portfoliolink)
+VALUES (2, 'photo editing', 'Best company in the world', 'profilepic.png','www.company.com');
 
 INSERT INTO education (profileid, school, coursename, startdate, enddate) 
 VALUES (1, 'SMU', 'Photography 101', '2020-11-11', '2021-11-11');

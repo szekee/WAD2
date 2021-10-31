@@ -29,6 +29,7 @@ if ( isset($_GET['locations']) && isset($_GET['roles'])) {
     }
 }
 
+// filter by role and locations
 foreach ($allprofiles as $profile) {
     if (in_array($profile->getCountry(), $locations)) {
         $profiles[] = $profile;
