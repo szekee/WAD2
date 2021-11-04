@@ -8,24 +8,24 @@ $_SESSION['userid'] = 3;
 //     exit;
 // }
 
-$_GET['skills'] = 'music producing, transcribing, videography';
-$_GET['bio'] = 'Music is greatttt';
-$_GET['profilepic'] = 'face.jpeg';
-$_GET['portfoliolink'] = 'www.happyyappy.com';
-$_GET['portfoliopath'] = '';
+$_POST['skills'] = 'music producing, transcribing, videography';
+$_POST['bio'] = 'Music is greatttt';
+$_POST['profilepic'] = 'face.jpeg';
+$_POST['portfoliolink'] = 'www.happyyappy.com';
+$_POST['portfoliopath'] = '';
 
 $status = false;
 $result = [];
 
-if( isset($_GET['skills']) && isset($_GET['bio']) && isset($_GET['profilepic']) && isset($_GET['portfoliolink']) && isset($_GET['portfoliopath']) ) {
+if( isset($_POST['skills']) && isset($_POST['bio']) && isset($_POST['profilepic']) && isset($_POST['portfoliolink']) && isset($_POST['portfoliopath']) ) {
 
     $userid = $_SESSION['userid'];
 
-    $skills = $_GET['skills'];
-    $bio = $_GET['bio'];
-    $profilepic = $_GET['profilepic'];
-    $portfoliolink = $_GET['portfoliolink'];
-    $portfoliopath = $_GET['portfoliopath'];
+    $skills = $_POST['skills'];
+    $bio = $_POST['bio'];
+    $profilepic = $_POST['profilepic'];
+    $portfoliolink = $_POST['portfoliolink'];
+    $portfoliopath = $_POST['portfoliopath'];
 
     $dao = new ProfileDAO();
     $profile_obj = $dao->getOneProfile($userid);
