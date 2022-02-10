@@ -1,6 +1,8 @@
 <?php
-    session_start();
-    $userid = $_SESSION["userid"];
+    // this file is to connect to database and delete a job from jobs table
+    
+    include 'session.php';
+
     $id = $_GET["id"];
     
     // Connect to Database
@@ -15,15 +17,15 @@
 
     // Execute SQL Statement
     $stmt->execute();
-
+    
     if ($stmt->execute()){
-        header('Location: view_job.php?delete=successful');  
+        // Redirect to get_job.php after insertion
+        header('Location: poster_postings.php?delete=successful');
     }
     else{
-        header('Location: view_job.php?delete=unsuccessful');  
+        // Redirect to get_job.php after insertion
+        header('Location: poster_postings.php?delete=unsuccessful');
     }
-
-    
     // Free up resources
     $stmt = null;
     $pdo = null;
