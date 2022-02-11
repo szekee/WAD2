@@ -1,0 +1,36 @@
+
+main {
+  min-height: 85vh;
+}
+
+
+#banner .cut {
+  height: 100%;
+}
+
+/* #banner .bg div {
+  background-color: gray;
+} */
+
+#banner .bg img {
+  min-width: 100%;
+  min-height: 100%;
+}
+
+#banner .avatar {
+  left: 50px;
+  height: 175px;
+  width: 175px;
+}
+
+#banner .user-info {
+  top: 68%;
+  left: 15%;
+}
+
+
+#bio-imgs .carousel-item img {
+  height: 300px;
+  margin: auto;
+}
+

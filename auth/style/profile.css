@@ -1,0 +1,104 @@
+/* img {
+    width: 100%;
+    height: 100%
+}
+
+.bg-black {
+    background: #000
+}
+
+.skill-block {
+    width: 30%
+}
+
+@media (min-width: 991px) and (max-width:1200px) {
+    .skill-block {
+        padding: 32px !important
+    }
+}
+
+@media (min-width: 1200px) {
+    .skill-block {
+        padding: 56px !important
+    }
+}
+*/
+
+html{
+    min-height: 100%;
+}
+
+body {
+    background: linear-gradient(#141e30, #243b55);
+}
+
+#profilepic {
+    border: solid 10px rgb(236, 210, 230);
+    border-radius: 50%;
+    margin-top: 50px;
+    margin-left: 20px;
+}
+
+.bg-image{
+    margin: auto;
+    margin-top: 50px;
+    border-radius: 50px 50px 0px 0px;
+    height: 300px;
+}
+
+.bg-secondary{
+    border-radius: 0px 0px 50px 50px;
+}
+
+.details{
+    margin: auto;
+    height: 120px
+}
+
+.username{
+    padding-top: 20px;
+    text-align: center;
+}
+
+.biocarousel{
+    margin:auto;
+    margin-top: 30px;
+}
+
+.bio{
+    /* margin: auto; */
+    /* margin-top: 30px; */
+    background-color: springgreen;
+    border-radius: 30px;
+    
+}
+
+.biocarousel{
+    margin-bottom: 35px;
+}
+
+.biopara{
+    text-align: center;
+}
+
+.d-block{
+    height: 500px;
+}
+
+.footer{
+    background-color: white;
+}
+
+.contact{
+    padding-top: 20px;
+    text-align: center;
+}
+
+.icon{
+    padding-bottom: 20px;
+}
+
+/* .profile{
+    padding: 20px;
+} */
+
